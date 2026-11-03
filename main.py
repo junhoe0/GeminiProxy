@@ -4,7 +4,7 @@ from google import genai
 from dotenv import load_dotenv
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import google.api_core.errors
+import google.api_core import errors
 
 load_dotenv()
 
@@ -47,7 +47,7 @@ def generate():
                 )
                 responseTxt = response.text
                 break
-            except (google.api_core.errors.ServiceUnavailable, google.api_core.errors.ResourceExhausted):
+            except (errors.ServiceUnavailable, errors.ResourceExhausted):
                 print(f"Model {model} is currently overloaded. Dropping down to next layer.")
                 continue
         
