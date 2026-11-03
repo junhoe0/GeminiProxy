@@ -1,10 +1,10 @@
 import os 
 from flask import Flask, request, jsonify
 from google import genai
+from google.genai.errors import ClientError, ServerError
 from dotenv import load_dotenv
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from google.api_core import errors
 
 load_dotenv()
 
@@ -47,8 +47,8 @@ def generate():
                 )
                 responseTxt = response.text
                 break
-            except (errors.ServiceUnavailable, errors.ResourceExhausted):
-                print(f"Model {model} is currently overloaded. Dropping down to next layer.")
+            except (ClientError, ServerError) as e:
+                print(f"Model {model} failed with HTTP status code {e.code}. Dropping down to next layer.")
                 continue
         
         if responseTxt is None:
