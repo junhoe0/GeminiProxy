@@ -1,6 +1,5 @@
 flask
 google-genai
-google-api-core
 python-dotenv
 flask-limiter
 gunicorn
