@@ -4,7 +4,7 @@ from google import genai
 from dotenv import load_dotenv
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import google.api_core import errors
+from google.api_core import errors
 
 load_dotenv()
 
