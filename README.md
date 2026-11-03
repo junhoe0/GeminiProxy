@@ -16,7 +16,7 @@ This is a lightweight Flask application that integrates with the Google GenAI SD
 1. **Clone the repository or save the script as `main.py`.**
 2. **Install the required dependencies:**
 ```bash
-pip install flask google-genai python-dotenv
+pip install -r requirements.txt
 
 ```
 
