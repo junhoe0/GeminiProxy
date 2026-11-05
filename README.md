@@ -1,6 +1,6 @@
 # Flask GenAI API Service
 
-This is a lightweight Flask application that integrates with the Google GenAI SDK to generate content using the `gemini-2.5-flash` model.
+This is a lightweight Flask application that integrates with the Google GenAI SDK to generate content using the Google Gemini models.
 
 ## Why use this?
 * This approach protects your private API key by storing it safely as an environment variable instead of hardcoding it.
