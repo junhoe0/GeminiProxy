@@ -3,19 +3,19 @@ from flask import Flask, request, jsonify
 from google import genai
 from google.genai.errors import ClientError, ServerError
 from dotenv import load_dotenv
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+# from flask_limiter import Limiter
+# from flask_limiter.util import get_remote_address
 
 load_dotenv()
 
 app = Flask(__name__)
 
-limiter = Limiter(
-    get_remote_address,
-    app=app,
-    default_limits='50 per hour',
-    storage_uri='memory://'
-)
+# limiter = Limiter(
+#     get_remote_address,
+#     app=app,
+#     default_limits='50 per hour',
+#     storage_uri='memory://'
+# )
 
 client = genai.Client(api_key=os.environ.get("GENAI_API_KEY"))
 fallbackChain = [
@@ -29,7 +29,7 @@ fallbackChain = [
 ]
 
 @app.route("/generate", methods=["POST"])
-@limiter.limit('10 per minute')
+# @limiter.limit('10 per minute')
 def generate():
     try:
         data = request.get_json()
