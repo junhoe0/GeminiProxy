@@ -33,29 +33,32 @@ fallbackChain = [
 def generate():
     try:
         data = request.get_json()
-        prompt = data.get("prompt")
-        if not prompt or prompt.strip() == "":
-            return jsonify({"error": "Prompt is required"}), 400
-
-        responseTxt = None
-
-        for model in fallbackChain:
-            try:
-                response = client.models.generate_content(
-                    model=model,
-                    contents=prompt,
-                )
-                responseTxt = response.text
-                break
-            except (ClientError, ServerError) as e:
-                print(f"Model {model} failed with HTTP status code {e.code}. Dropping down to next layer.")
-                continue
-        
-        if responseTxt is None:
-            return jsonify({"error":"All Gemini models are currently experiencing high demand right now. Please try again later."}), 503
-
-        return jsonify({"response": response.text}), 200
-
+        authToken = data.get("proxyToken")
+        if authToken == os.environ.get("PROXY_TOKEN"):
+            prompt = data.get("prompt")
+            if not prompt or prompt.strip() == "":
+                return jsonify({"error": "Prompt is required"}), 400
+    
+            responseTxt = None
+    
+            for model in fallbackChain:
+                try:
+                    response = client.models.generate_content(
+                        model=model,
+                        contents=prompt,
+                    )
+                    responseTxt = response.text
+                    break
+                except (ClientError, ServerError) as e:
+                    print(f"Model {model} failed with HTTP status code {e.code}. Dropping down to next layer.")
+                    continue
+            
+            if responseTxt is None:
+                return jsonify({"error":"All Gemini models are currently experiencing high demand right now. Please try again later."}), 503
+    
+            return jsonify({"response": response.text}), 200
+        else:
+            return jsonify({"response": "Auth Token not provided")
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
