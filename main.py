@@ -58,7 +58,7 @@ def generate():
     
             return jsonify({"response": response.text}), 200
         else:
-            return jsonify({"response": "Auth Token not provided")
+            return jsonify({"response": "Auth Token not provided"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
