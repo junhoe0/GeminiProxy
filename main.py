@@ -35,7 +35,7 @@ def generate():
         data = request.get_json()
         authToken = data.get("proxyToken")
         if not data:
-            return jsonify({"error":"No JSON received"}). 400
+            return jsonify({"error":"No JSON received"}), 400
         elif authToken == os.environ.get("PROXY_TOKEN"):
             prompt = data.get("prompt")
             if not prompt or prompt.strip() == "":
